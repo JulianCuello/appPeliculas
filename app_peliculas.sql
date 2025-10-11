@@ -27,6 +27,10 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `actor`
 --
 
+if (count($tablas) == 0) {
+            // Crear tablas si no existen
+            $sql = <<<END
+
 CREATE TABLE `actor` (
   `id_actor` int(200) NOT NULL,
   `nombre_actor` varchar(200) NOT NULL,
@@ -96,6 +100,11 @@ ALTER TABLE `actor`
   ADD CONSTRAINT `actor_ibfk_1` FOREIGN KEY (`id_pelicula`) REFERENCES `pelicula` (`id_pelicula`);
 COMMIT;
 
+  COMMIT;
+        END;
+
+                    $this->db->exec($sql);
+ }
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
