@@ -30,12 +30,18 @@ switch ($params[0]) {
     case 'eliminar_pelicula':
             $controlador->eliminar_pelicula($params[1]);
             break;
-    case 'agregarPeliculaFormulario':
-        $controlador->mostrarFormularioAlta();
+    case 'agregar_pelicula_formulario':
+        $controlador->mostrar_formulario_alta();
         break;
     case 'agregar_pelicula':
         $controlador->agregar_pelicula();
         break;
         echo "<h1>404 - Página no encontrada</h1>";
         break;
+        case 'editar_pelicula':
+        $controlador->editar_pelicula($params[1]);
+        break;
+    case 'mostrar_editar_pelicula':    
+        $controlador->editar_pelicula($params[1]);
+           break;
 }
