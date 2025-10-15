@@ -7,7 +7,7 @@ class PeliculaVista {
     }
 
     public function mostrar_peliculas($peliculas) {
-        require_once "templates/header.php";
+        require_once "templates/mostrar/header.phtml";
         ?>
         <main class="container my-4">
             <section class="peliculas">
@@ -22,8 +22,6 @@ class PeliculaVista {
                                     <a href="pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-outline-primary me-2">Leer más</a>
                                     <a href="actualizar_pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-success me-2">Modificar</a>
                                     <a href="eliminar_pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-danger">Eliminar</a>
-                                    <a href="agregar_pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-primary">Agregar</a>
-
                                 </div>
                             </div>
                         </div>
@@ -32,15 +30,15 @@ class PeliculaVista {
             </section>
         </main>
         <?php
-        require_once "templates/footer.php";
+        require_once "templates/mostrar/footer.phtml";
     }
 
     public function mostrar_pelicula($pelicula) {
-        require_once "templates/header.php";
+        require_once "templates/mostrar/header.phtml";
 
         if (!$pelicula) {
             echo "<p>Película no encontrada.</p>";
-            require_once "templates/footer.php";
+            require_once "templates/mostrar/footer.phtml";
             return;
         }
         ?>
@@ -55,7 +53,7 @@ class PeliculaVista {
             </section>
         </main>
         <?php
-        require_once "templates/footer.php";
+        require_once "templates/mostrar/footer.phtml";
     }
 
 }
