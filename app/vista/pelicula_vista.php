@@ -20,7 +20,7 @@ class PeliculaVista {
                                     <h5 class="card-title"><?php echo htmlspecialchars($pelicula->nombre_pelicula); ?></h5>
                                     <p class="card-text"><?php echo htmlspecialchars($pelicula->duracion); ?></p>
                                     <a href="pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-outline-primary me-2">Leer más</a>
-                                    <a href="actualizar_pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-success me-2">Modificar</a>
+                                    <a href="modificar_pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-success me-2">Modificar</a>
                                     <a href="eliminar_pelicula/<?php echo $pelicula->id_pelicula; ?>" class="btn btn-danger">Eliminar</a>
                                 </div>
                             </div>
