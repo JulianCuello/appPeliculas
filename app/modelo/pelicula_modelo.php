@@ -31,6 +31,11 @@ class PeliculaModelo {
     $query->execute([$id]);
     return $query->rowCount();
 }
-
-
+public function insertar_pelicula($nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img) {
+    $query = $this->db->prepare('INSERT INTO pelicula (nombre_pelicula, duracion, genero, descripcion, fecha_estreno, publico, img) VALUES (?, ?, ?, ?, ?,?, ?)');
+    $query->execute([$nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img]);
+    $id = $this->db->lastInsertId();
+    
+    return $id;
+    }
 }
