@@ -31,7 +31,7 @@ switch ($params[0]) {
             $controlador->eliminar_pelicula($params[1]);
             break;
     case 'agregarPeliculaFormulario':
-        $Controlador->mostrarFormularioAlta();
+        $controlador->mostrarFormularioAlta();
         break;
     case 'agregar_pelicula':
         $controlador->agregar_pelicula();

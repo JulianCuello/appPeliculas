@@ -26,7 +26,6 @@ class PeliculaControlador {
     exit;
 }
     public function agregar_pelicula() {
-        AuthHelper::verify();
        if (!isset($_POST['nombre_pelicula']) || empty($_POST['nombre_pelicula'])) {
              return $this->vista->mostrar_error('Falta completar el nombre de la pelicula');
         }

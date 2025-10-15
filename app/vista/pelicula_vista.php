@@ -2,7 +2,7 @@
 
 class PeliculaVista {
 
-    public function mostrarError($error) {
+    public function mostrar_error($error) {
         echo "<h2>$error</h2>";
     }
 
