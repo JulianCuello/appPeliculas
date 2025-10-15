@@ -77,20 +77,4 @@ class PeliculaControlador {
         }
     }
 
-    public function editPlayer($id) {
-        if(isset($_POST['nombre']) && isset($_POST['nacionalidad']) && isset($_POST['posicion']) &&  isset($_POST['edad'])  &&  isset($_POST['id_club']) &&
-        !empty($_POST['nombre']) && !empty($_POST['nacionalidad']) && !empty($_POST['posicion']) && !empty($_POST['edad'])  && !empty($_POST['id_club'])){
-            $nombre = $_POST['nombre'];
-            $nacionalidad = $_POST['nacionalidad'];
-            $posicion = $_POST['posicion'];
-            $edad = $_POST ['edad'];
-            $id_club = $_POST ['id_club'];
-
-            $this->model->updatePlayer($id, $nombre, $nacionalidad, $posicion, $edad, $id_club);
-        } else {
-            $this->view->showError("Error al Modificar Jugador, verifica que todos los campos esten completos");
-        }
-           header('Location: ' . BASE_URL .'players') ;
-}
-
 }
