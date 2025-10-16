@@ -30,7 +30,7 @@ switch ($params[0]) {
     case 'eliminar_pelicula':
             $controlador->eliminar_pelicula($params[1]);
             break;
-    case 'agregar_pelicula_formulario':
+    case 'formulario_agregar_pelicula':
         $controlador->mostrar_formulario_alta();
         break;
     case 'agregar_pelicula':

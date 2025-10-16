@@ -1,5 +1,5 @@
 <?php
-require 'templates/header.php';   
+require 'templates/mostrar/header.phtml';   
 ?>
         <table class="table">
             <thead>
