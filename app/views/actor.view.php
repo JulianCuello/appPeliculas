@@ -11,7 +11,7 @@ class actorview{
     }
     
     public function mostrar_formulario_actor_modificacion($actor){
-        require './templates/forms/modificar_actor.phtml';
+        require './templates/forms/modificar.actor.phtml';
     }
     
     public function mostrar_formulario_actor(){

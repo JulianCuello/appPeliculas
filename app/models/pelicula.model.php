@@ -47,7 +47,8 @@ class listamodel extends model{
     //modifica producto
     public function modificar_pelicula($id_pelicula,$nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor){
         $query = $this->db->prepare('UPDATE pelicula SET id_pelicula=?,nombre_pelicula=?,duracion=?,genero=?,descripcion=?,fecha_estreno=?,publico=?,img=?,id_actor=? WHERE id_pelicula=?');
-        $query->execute([$id_pelicula, $nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor]);
+        $query->execute([$id_pelicula, $nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor, $id_pelicula]);
+
         return $query->rowCount();
     }
 
