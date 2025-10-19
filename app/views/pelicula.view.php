@@ -12,7 +12,7 @@ class listaview {
     }
 
     public function mostrar_formulario_modificacion($actor, $item) {
-        require './templates/forms/modificar.phtml';          
+        require './templates/forms/modificar.pelicula.phtml';          
     }
     public function showForm($actor){
         require './templates/forms/nueva.pelicula.phtml';

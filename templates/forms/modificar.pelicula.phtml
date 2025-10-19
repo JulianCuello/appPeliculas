@@ -2,15 +2,14 @@
 require_once 'templates/task/header.phtml';  ?>
 
 <div class="container mt-1" >
-    <h2>Modificacion de Producto</h2>
+    <h2>Modificacion de Pelicula</h2>
     <form action="modificar_pelicula" method="POST">
         <div class="mb-1">
-            
             <select class="form-select" id="actor" name="id_actor">
-                <?php foreach ($actor as $act) { ?>
-                    <option value="<?= $act->id_actor; ?>"><?= $act->actor; ?></option>
-                <?php } ?>
-            </select>
+        <?php foreach ($actor as $act) { ?>
+            <option value="<?= $act->id_actor; ?>"><?= $act->nombre_actor; ?></option>
+            <?php } ?>
+        </select>
         </div>
         <div class="mb-1">
             <input type="hidden" class="form-control" id="id_pelicula" name="id_pelicula" value="<?= $item[0]->id_pelicula; ?>" required>
