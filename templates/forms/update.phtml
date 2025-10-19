@@ -1,0 +1,52 @@
+<?php
+require_once 'templates/task/header.phtml';  ?>
+
+<div class="container mt-1" >
+    <h2>Modificacion de Producto</h2>
+    <form action="modificar_pelicula" method="POST">
+        <div class="mb-1">
+            
+            <select class="form-select" id="actor" name="id_actor">
+                <?php foreach ($actor as $act) { ?>
+                    <option value="<?= $act->id_actor; ?>"><?= $act->actor; ?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <div class="mb-1">
+            <input type="hidden" class="form-control" id="id_pelicula" name="id_pelicula" value="<?= $item[0]->id_pelicula; ?>" required>
+        </div>
+         <div class="mb-1">
+            <label for="nombre_pelicula" class="form-label">Nombre de la pelicula</label>
+            <input type="text" class="form-control" id="nombre_pelicula" name="nombre_pelicula" value="<?= $item[0]->nombre_pelicula; ?>" required>
+        </div>
+        <div class="mb-1">
+            <label for="duracion" class="form-label">Duracion</label>
+            <input type="number" class="form-control" id="duracion" name="duracion" value="<?= $item[0]->duracion; ?>">
+        </div>
+        <div class="mb-1">
+            <label for="genero" class="form-label">Nombre de Producto</label>
+            <input type="text" class="form-control" id="genero" name="genero" value="<?= $item[0]->genero; ?>" required>
+        </div>
+        <div class="mb-1">
+            <label for="descripcion" class="form-label">Descripcion</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" value="<?= $item[0]->descripcion; ?>" required>
+        </div>
+        <div class="mb-1">
+            <label for="fecha_estreno" class="form-label">Fecha de estreno</label>
+            <input type="date" class="form-control" id="fecha_estreno" name="fecha_estreno" value="<?= $item[0]->fecha_estreno; ?>" required>
+        </div>
+        <div class="mb-1">
+            <label for="publico" class="form-label">Publico</label>
+            <input type="text" class="form-control" id="publico" name="publico" value="<?= $item[0]->publico; ?>" required>
+        </div>
+         <div class="mb-1">
+            <label for="img" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="img" name="img">
+        </div>
+        <button type="submit" class="btn btn-primary">Modificar</button>
+    </form>
+</div>
+
+<?php
+
+require_once 'templates/task/footer.phtml';

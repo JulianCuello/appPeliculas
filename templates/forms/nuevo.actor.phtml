@@ -1,0 +1,33 @@
+
+<?php
+
+require './templates/task/header.phtml';  ?>
+
+    <div class="container mt-3">
+        <h2>Carga de actor</h2>
+
+        <form action="agregar_actor" method="POST">
+            <div class="mb-1">
+                <label for="actor" class="form-label">Actor</label>
+                <input type="text" class="form-control" id="actor" name="actor" required>
+            </div>
+            <div class="mb-1">
+                <label for="nombre_actor" class="form-label">Nombre del actor</label>
+                <input type="text" class="form-control" id="nombre_actor" name="nombre_actor" required>
+            </div>
+            <div class="mb-1">
+                <label for="fecha_nacimiento" class="form-label">Fecha nacimiento</label>
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            </div>
+            <div class="mb-1">
+                <label for="nacionalidad" class="form-label">Nacionalidad
+                    <input type="text" class="form-control" id="nacionalidad" name="nacionalidad" required>
+            </div>
+          
+            <button type="submit" class="btn btn-primary">Guardar actor</button>
+        </form>
+    </div>
+
+    <?php
+
+    require_once 'templates/task/footer.phtml';

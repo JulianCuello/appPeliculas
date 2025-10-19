@@ -1,0 +1,22 @@
+<?php require './templates/task/header.phtml'; ?>
+
+    <div class="container mt-5">
+        <?php  foreach($actor as $act) { ?>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $act->nombre_actor; ?></h5>
+                            <p class="card-text"><?= $act->fecha_nacimiento; ?></p>
+                            <p class="card-text"><strong>edad:</strong>$<?= $act->edad; ?></p>
+                            <p class="card-text"><strong>Nacionalidad:</strong> <?= $act->nacionalidad; ?></p>
+                           
+                            <a href="actor" class="btn btn-primary">Volver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+
+<?php require_once 'templates/task/footer.phtml'; ?>

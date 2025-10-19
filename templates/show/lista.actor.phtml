@@ -1,0 +1,37 @@
+
+<?php
+require './templates/task/header.phtml';   
+?>
+    <div class="mt-1 w-100 mx-auto" style="height: 300px; ">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center">nombre del actor</th>
+                    <th class="text-center">fecha_nacimiento</th>
+                    <th class="text-center">edad</th>
+                    <th class="text-center">nacionalidad</th>
+    
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($actores as $actor) { ?>      
+                    <tr>
+                        <td class="text-center"><?= $actor->nombre_actor; ?></td>
+                        <td class="text-center"><?= $actor->fecha_nacimiento; ?></td>
+                        <td class="text-center"><?= $actor->edad; ?></td>
+                        <td class="text-center"><?= $actor->nacionalidad; ?></td>
+                        <td class="text-center">
+                            <a href="id_actor/<?= $actor->id_actor;?>" class="btn btn-primary">Ver pelicula</a>
+                            <?php if (AuthHelper::isAdmin()) { ?>
+                            <a href="remover_actor/<?= $actor->id_actor; ?>" type="button" class='btn btn-danger ml-auto'>Eliminar</a>
+                            <a href="modificar_actor_formulario/<?= $actor->id_actor; ?>" type="button" class='btn btn-success ml-auto'>Modificar</a>
+                            <?php } ?>
+                        </td>
+                        </tr>      
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+        <?php
+         require_once 'templates/task/footer.phtml';

@@ -1,0 +1,25 @@
+<?php require './templates/task/header.phtml'; ?>
+
+<div class="container mt-5">
+    <?php foreach ($lista as $item) { ?>
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="<?= $item->img; ?>" class="img-fluid rounded-start" alt="Imagen del Producto">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $item->nombre_pelicula; ?></h5>
+                        <p class="card-text"><?= $item->duracion; ?></p>
+                        <p class="card-text"><strong>Genero:</strong>$<?= $item->genero; ?></p>
+                        <p class="card-text"><strong>Descripcion:</strong> <?= $item->descripcion; ?></p>
+                        <p class="card-text"><strong>Fecha de estreno:</strong> <?= $item->fecha_estreno; ?></p>
+                        <a href="lista" class="btn btn-primary">Volver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+</div>
+
+<?php require_once 'templates/task/footer.phtml'; ?>

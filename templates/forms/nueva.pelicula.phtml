@@ -1,0 +1,46 @@
+<?php require_once 'templates/mostrar/header.phtml'; ?>
+
+<div class="container mt-1">
+    <h5>Carga de Producto</h5>
+    <form action="agregar_pelicula" method="POST">
+        <div class="mb-1">
+            
+            <select class="form-select" id="actor" name="id_actor">
+                <?php foreach($actor as $act): ?>
+                    <option value="<?= $cat->id_actor; ?>"><?= $cat->actor; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="mb-1">
+            <label for="nombre_pelicula" class="form-label">Nombre de la pelicula</label>
+            <input type="text" class="form-control" id="nombre_pelicula" name="nombre_pelicula" required>
+        </div>
+        <div class="mb-1">
+            <label for="duracion" class="form-label">Duracion</label>
+            <input type="text" class="form-control" id="duracion" name="duracion" required>
+        </div>
+        <div class="mb-1">
+            <label for="genero" class="form-label">Genero</label>
+            <input type="text" class="form-control" id="genero" name="genero" required>
+        </div>
+        <div class="mb-1">
+            <label for="descripcion" class="form-label">Descripcion</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+        </div>
+        <div class="mb-1">
+            <label for="fecha_estreno" class="form-label">Fecha de estreno</label>
+            <input type="date" class="form-control" id="fecha_estreno" name="fecha_estreno">
+        </div>
+        <div class="mb-1">
+            <label for="publico" class="form-label">Publico</label>
+            <input type="text" class="form-control" id="publico" name="publico">
+        </div>
+         <div class="mb-1">
+            <label for="img" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="img" name="img">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+    </form>
+</div>
+
+<?php require_once 'templates/task/footer.phtml'; ?>
