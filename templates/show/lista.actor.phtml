@@ -6,6 +6,7 @@ require './templates/task/header.phtml';
         <table class="table">
             <thead>
                 <tr>
+                    <th class="text-center">id</th>
                     <th class="text-center">nombre del actor</th>
                     <th class="text-center">fecha_nacimiento</th>
                     <th class="text-center">edad</th>
@@ -17,6 +18,7 @@ require './templates/task/header.phtml';
             <tbody>
                 <?php foreach($actores as $actor) { ?>      
                     <tr>
+                        <td class="text-center"><?= $actor->id_actor; ?></td>
                         <td class="text-center"><?= $actor->nombre_actor; ?></td>
                         <td class="text-center"><?= $actor->fecha_nacimiento; ?></td>
                         <td class="text-center"><?= $actor->edad; ?></td>

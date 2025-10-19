@@ -121,6 +121,7 @@ class Peliculacontroller{
         AuthHelper::verify();
         try {//verifico permisos, parametros validos y posible acceso sin previo acceso al form alta.
             if ($_POST && ValidationHelper::verifyForm($_POST)) {
+                    $id_pelicula = $_POST['id_pelicula'];
                     $nombre_pelicula = $_POST['nombre_pelicula'];
                     $duracion = $_POST['duracion'];
                     $genero = $_POST['genero'];
@@ -129,7 +130,7 @@ class Peliculacontroller{
                     $publico = $_POST['publico'];
                     $img = $_POST['img'];
                     $id_actor = $_POST['id_actor'];
-                $id = $this->model->insertar_pelicula($nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor);
+                $id = $this->model->insertar_pelicula($id_pelicula,$nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor);
 
                 if ($id) {
                     header('Location: ' . BASE_URL . "lista");

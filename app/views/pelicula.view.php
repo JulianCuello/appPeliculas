@@ -15,7 +15,7 @@ class listaview {
         require './templates/forms/modificar.phtml';          
     }
     public function showForm($actor){
-        require './templates/forms/nuevo.pelicula.phtml';
+        require './templates/forms/nueva.pelicula.phtml';
     }
 }
 

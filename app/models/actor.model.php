@@ -18,11 +18,11 @@ class actormodel extends model{
     }
     
     //inserta nueva actor
-    public function insertar_actor($nombre_actor , $fecha_nacimiento, $edad, $nacionalidad){
-        $query = $this->db->prepare('INSERT INTO actor ($nombre_actor , $fecha_nacimiento, $edad, $nacionalidad) VALUES(?,?,?,?)');
-        $query->execute([$nombre_actor , $fecha_nacimiento, $edad, $nacionalidad]);
-        return $this->db->lastInsertId();
-    }
+    public function insertar_actor($id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula){
+    $query = $this->db->prepare('INSERT INTO actor (id_actor, nombre_actor, fecha_nacimiento, edad, nacionalidad, id_pelicula) VALUES (?, ?, ?, ?, ?, ?)');
+    $query->execute([$id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula]);
+    return $this->db->lastInsertId();
+}
 
     //elimina actor
     public function eliminar_actor($id){
@@ -40,7 +40,7 @@ class actormodel extends model{
 
     //consulta para mostrar las actores disponibles cuando se quiere modificar un producto o actor
     public function obtener_id_actor(){ 
-        $query = $this->db->prepare('SELECT actor.id_actor,actor.actor FROM actor;');
+        $query = $this->db->prepare('SELECT id_actor, nombre_actor FROM actor;');
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
     }

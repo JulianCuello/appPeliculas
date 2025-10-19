@@ -37,11 +37,12 @@ class listamodel extends model{
     }
 
     //elimina producto
-    public function insertar_pelicula($nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor){
-        $query = $this->db->prepare('INSERT INTO pelicula (nombre_pelicula, duracion, genero, descripcion, fecha_estreno, publico, img, $id_actor) VALUES(?,?,?,?,?,?,?)');
-        $query->execute([$nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor]);
-        return $this->db->lastInsertId();
-    }
+   public function insertar_pelicula($id_pelicula,$nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor){
+    $query = $this->db->prepare('INSERT INTO pelicula (id_pelicula,nombre_pelicula, duracion, genero, descripcion, fecha_estreno, publico, img, id_actor) VALUES(?,?,?,?,?,?,?,?,?)');
+    $query->execute([$id_pelicula, $nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor]);
+    return $this->db->lastInsertId();
+}
+
 
     //modifica producto
     public function modificar_pelicula($id_pelicula,$nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor){

@@ -130,7 +130,7 @@ class actorcontroller
                 $fecha_nacimiento =htmlspecialchars($_POST['fecha_nacimiento']);
                 $edad =htmlspecialchars($_POST['edad']);
                 $nacionalidad =htmlspecialchars($_POST['nacionalidad']);
-                $id_pelicula =htmlspecialchars($_POST['id_pelicula ']);
+                $id_pelicula =htmlspecialchars($_POST['id_pelicula']);
 
                 $id = $this->model->insertar_actor($id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad,$id_pelicula);
                 if ($id) {

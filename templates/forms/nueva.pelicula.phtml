@@ -1,13 +1,13 @@
-<?php require_once 'templates/mostrar/header.phtml'; ?>
+<?php require_once 'templates/task/header.phtml'; ?>
 
 <div class="container mt-1">
-    <h5>Carga de Producto</h5>
+    <h5>Carga de pelicula</h5>
     <form action="agregar_pelicula" method="POST">
         <div class="mb-1">
             
             <select class="form-select" id="actor" name="id_actor">
                 <?php foreach($actor as $act): ?>
-                    <option value="<?= $cat->id_actor; ?>"><?= $cat->actor; ?></option>
+                    <option value="<?= $act->id_actor; ?>"><?= $act->nombre_actor; ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
