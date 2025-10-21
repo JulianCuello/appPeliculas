@@ -6,8 +6,8 @@ class actorview{
         require './templates/show/lista.actor.phtml';
     }
 
-    public function mostrar_peliculas_actor_por_id($actor){
-        require './templates/show/lista_actor_por_id.phtml';
+    public function mostrar_peliculas_actor_por_id($peliculas){  // ← Cambié $actor por $peliculas
+    require './templates/show/lista.actor_por_id.phtml';
     }
     
     public function mostrar_formulario_actor_modificacion($actor){

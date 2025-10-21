@@ -18,11 +18,11 @@ class actormodel extends model{
     }
     
     //inserta nueva actor
-    public function insertar_actor($id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula){
-    $query = $this->db->prepare('INSERT INTO actor (id_actor, nombre_actor, fecha_nacimiento, edad, nacionalidad, id_pelicula) VALUES (?, ?, ?, ?, ?, ?)');
-    $query->execute([$id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula]);
+    public function insertar_actor($nombre_actor, $fecha_nacimiento, $edad, $nacionalidad){
+    $query = $this->db->prepare('INSERT INTO actor (nombre_actor, fecha_nacimiento, edad, nacionalidad) VALUES (?, ?, ?, ?)');
+    $query->execute([$nombre_actor, $fecha_nacimiento, $edad, $nacionalidad]);
     return $this->db->lastInsertId();
-}
+    }
 
     //elimina actor
     public function eliminar_actor($id){
@@ -32,10 +32,10 @@ class actormodel extends model{
     }
 
     //modifica actor
-    public function modificar_pelicula($nombre_actor , $fecha_nacimiento, $edad, $nacionalidad){
-        $query = $this->db->prepare('UPDATE actor SET nombre_actor=?,fecha_nacimiento=?,edad=?,nacionalidad=? WHERE id_actor=?');
-        $query->execute([$nombre_actor , $fecha_nacimiento, $edad, $nacionalidad]);
-        return $query->rowCount();
+    public function modificar_pelicula($id_actor, $nombre_actor, $fecha_nacimiento, $edad, $nacionalidad){
+    $query = $this->db->prepare('UPDATE actor SET nombre_actor=?,fecha_nacimiento=?,edad=?,nacionalidad=? WHERE id_actor=?');
+    $query->execute([$nombre_actor, $fecha_nacimiento, $edad, $nacionalidad, $id_actor]);
+    return $query->rowCount();
     }
 
     //consulta para mostrar las actores disponibles cuando se quiere modificar un producto o actor
@@ -44,5 +44,11 @@ class actormodel extends model{
         $query->execute();
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function obtener_id_pelicula(){ 
+    $query = $this->db->prepare('SELECT id_pelicula, nombre_pelicula FROM pelicula');
+    $query->execute();
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
 
 }

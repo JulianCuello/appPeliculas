@@ -2,14 +2,14 @@
 require_once './app/views/actor.view.php';
 require_once './app/views/alert.view.php';
 require_once './app/models/actor.model.php';
+require_once './app/models/pelicula.model.php';  // ← AGREGAR ESTA LÍNEA
 require_once './helpers/validation.helper.php';
 
 //controller de actores
 class actorcontroller
 {
-
     private $model;
-    private $modellista;
+    private $modelPelicula;  // ← Cambié el nombre para que sea más claro
     private $view;
     private $alertview;
 
@@ -17,7 +17,7 @@ class actorcontroller
     {
         //se instancian los dos modelos para no delegar mal, y que cada modelo acceda a su tabla correspondiente.
         $this->model = new actormodel();
-        $this->modellista = new listamodel();
+        $this->modelPelicula = new listamodel();  // ← Cambié el nombre aquí también
         $this->view = new actorview();
         $this->alertview = new Alertview();
     }
@@ -33,15 +33,16 @@ class actorcontroller
         }
     }
 
-    //listaa filtrada
+    //lista filtrada
     public function mostrar_actor_por_id($id)
     {
-        if (ValidationHelper::verifyIdRouter($id)) { //validacion datos recibidos del router
-            $actor = $this->modellista->obtener_pelicula_actor_por_id($id);//selecciona los items relacionados y la actor asociada segun parametro
-            if ($actor != null) {
-                $this->view->mostrar_peliculas_actor_por_id($actor);
+        if (ValidationHelper::verifyIdRouter($id)) {
+            $peliculas = $this->modelPelicula->obtener_pelicula_actor_por_id($id);
+            
+            if ($peliculas != null && count($peliculas) > 0) {
+                $this->view->mostrar_peliculas_actor_por_id($peliculas);
             } else {
-                $this->alertview->render_empty("la actor seleccionada no contiene items asociados");
+                $this->alertview->render_empty("Este actor no tiene películas asociadas");
             }
         } else {
             $this->alertview->render_error("404-Not-Found");
@@ -99,7 +100,9 @@ class actorcontroller
                 $nacionalidad =htmlspecialchars($_POST['nacionalidad']);
                 $id_pelicula =htmlspecialchars($_POST['id_pelicula ']);
 
-                $actorModificada = $this->model->modificar_pelicula($id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad,$id_pelicula);
+                $actorModificada = $this->model->modificar_pelicula($id_actor, $nombre_actor, $fecha_nacimiento, $edad, $nacionalidad);
+
+
                 if ($actorModificada > 0) {
                     header('Location: ' . BASE_URL . "actor");
                 } else {
@@ -116,9 +119,17 @@ class actorcontroller
 
     //mostrar formulario altaactor
     public function mostrar_formulario_actor(){
-        AuthHelper::verify();
-        $this->view->mostrar_formulario_actor();
-    }
+    AuthHelper::verify();
+    $peliculas = $this->model->obtener_id_pelicula();
+    
+    // Debug temporal
+    echo "<pre>";
+    print_r($peliculas);
+    echo "</pre>";
+    die();
+    
+    $this->view->mostrar_formulario_actor($peliculas);
+}
 
 
     public function agregar_actor(){
@@ -132,7 +143,7 @@ class actorcontroller
                 $nacionalidad =htmlspecialchars($_POST['nacionalidad']);
                 $id_pelicula =htmlspecialchars($_POST['id_pelicula']);
 
-                $id = $this->model->insertar_actor($id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad,$id_pelicula);
+                $id = $this->model->insertar_actor($nombre_actor, $fecha_nacimiento, $edad, $nacionalidad);
                 if ($id) {
                     header('Location: ' . BASE_URL . "actor");
                 } else {
