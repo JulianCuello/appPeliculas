@@ -37,7 +37,7 @@ class actorcontroller
     public function mostrar_actor_por_id($id)
     {
         if (ValidationHelper::verifyIdRouter($id)) { //validacion datos recibidos del router
-            $actor = $this->modellista->obtener_pelicula_actor_por_id($id);//selecciona los items relacionados y la actor asociada segun parametro
+            $actor = $this->modellista->obtener_pelicula_actor_por_id($id);
             if ($actor != null) {
                 $this->view->mostrar_peliculas_actor_por_id($actor);
             } else {
