@@ -97,7 +97,7 @@ class actorcontroller
                 $fecha_nacimiento =htmlspecialchars($_POST['fecha_nacimiento']);
                 $edad =htmlspecialchars($_POST['edad']);
                 $nacionalidad =htmlspecialchars($_POST['nacionalidad']);
-                $id_pelicula =htmlspecialchars($_POST['id_pelicula ']);
+                $id_pelicula =htmlspecialchars($_POST['id_pelicula']);
 
                 $actorModificada = $this->model->modificar_pelicula($id_actor, $nombre_actor , $fecha_nacimiento, $edad, $nacionalidad,$id_pelicula);
                 if ($actorModificada > 0) {
@@ -119,8 +119,7 @@ class actorcontroller
         AuthHelper::verify();
         $this->view->mostrar_formulario_actor();
     }
-
-
+    
     public function agregar_actor(){
         AuthHelper::verify();
         try {//verifico permisos, parametros validos y posible acceso sin datos al form de alta.

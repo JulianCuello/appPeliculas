@@ -21,14 +21,13 @@ class listamodel extends model{
 
     //consulta por producto incluyendo la actor a la que corresponde
     public function obtener_pelicula_actor_por_id($id){
-        $query = $this->db->prepare('SELECT pelicula.*, actor.actor FROM pelicula JOIN actor ON pelicula.id_actor = actor.id_actor WHERE pelicula.id_actor=?');
-        $query->execute([$id]);
-        return $query->fetchAll(PDO::FETCH_OBJ);
-        //var_dump($algo);
-        //die();
-        return $query;
-    }
+    $query = $this->db->prepare(
+        'SELECT pelicula.*, actor.nombre_actor FROM pelicula JOIN actor ON pelicula.id_actor = actor.id_actor  WHERE pelicula.id_actor=?');
+    $query->execute([$id]);
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
 
+   
     //eliminar producto
     public function eliminar_pelicula($id){
         $query = $this->db->prepare('DELETE FROM pelicula WHERE id_pelicula = ?');

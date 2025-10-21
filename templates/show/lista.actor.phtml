@@ -24,7 +24,7 @@ require './templates/task/header.phtml';
                         <td class="text-center"><?= $actor->edad; ?></td>
                         <td class="text-center"><?= $actor->nacionalidad; ?></td>
                         <td class="text-center">
-                            <a href="id_actor/<?= $actor->id_actor;?>" class="btn btn-primary">Ver pelicula</a>
+                            <a href="id_actor/<?= $actor->id_actor;?>" class="btn btn-primary">Ver actor</a>
                             <?php if (AuthHelper::isAdmin()) { ?>
                             <a href="remover_actor/<?= $actor->id_actor; ?>" type="button" class='btn btn-danger ml-auto'>Eliminar</a>
                             <a href="modificar_actor_formulario/<?= $actor->id_actor; ?>" type="button" class='btn btn-success ml-auto'>Modificar</a>
