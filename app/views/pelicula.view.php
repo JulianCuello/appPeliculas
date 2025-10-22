@@ -10,9 +10,9 @@ class listaview {
         require './templates/show/lista.pelicula_por_id.phtml';   
     }
 
-    public function mostrar_formulario_modificacion($item) {
-        require './templates/forms/modificar.pelicula.phtml';          
-    }
+    public function mostrar_formulario_modificacion($actor, $item) { // Agregar $actor
+    require './templates/forms/modificar.pelicula.phtml';          
+}
     
     public function showForm(){
         require './templates/forms/nueva.pelicula.phtml';

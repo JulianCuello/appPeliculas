@@ -66,19 +66,13 @@ class Peliculacontroller{
 
     //mostrar formulario modificacion
     public function mostrar_formulario_modificacion($id){
-        AuthHelper::verify();//verifico permisos y parametros validos
-        if (ValidationHelper::verifyIdRouter($id)) {
-            $item = $this->model->obtener_lista_por_id($id);//consulto los tados actuales
-            if ($item != null) {
-                $actor = $this->modelactor->obtener_id_actor();//consulto las actores disponibles para modificar
-                $this->view->mostrar_formulario_modificacion($actor, $item);
-            } else {
-                $this->alertview->render_error("error al intentar mostrar formulario");
-            }
-        } else {
-            $this->alertview->render_error("404-Not-Found");
-        }
+    // ...
+    $item = $this->model->obtener_lista_por_id($id);
+    if ($item != null) {
+        $actor = $this->modelactor->obtener_id_actor();
+        $this->view->mostrar_formulario_modificacion($actor, $item); // ❌ Orden incorrecto
     }
+}
 
    //enviar datos de modificacion
 public function mostrar_modificacion(){
