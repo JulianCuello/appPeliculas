@@ -2,14 +2,15 @@
 require_once './app/views/actor.view.php';
 require_once './app/views/alert.view.php';
 require_once './app/models/actor.model.php';
-require_once './app/models/pelicula.model.php';  // ← AGREGAR ESTA LÍNEA
+require_once './app/models/pelicula.model.php';
 require_once './helpers/validation.helper.php';
 
 //controller de actores
 class actorcontroller
 {
+
     private $model;
-    private $modelPelicula;  // ← Cambié el nombre para que sea más claro
+    private $modellista;
     private $view;
     private $alertview;
 
@@ -17,12 +18,12 @@ class actorcontroller
     {
         //se instancian los dos modelos para no delegar mal, y que cada modelo acceda a su tabla correspondiente.
         $this->model = new actormodel();
-        $this->modelPelicula = new listamodel();  // ← Cambié el nombre aquí también
+        $this->modellista = new listamodel(); // AGREGAR ESTA LÍNEA
         $this->view = new actorview();
         $this->alertview = new Alertview();
     }
 
-    //listaa completa
+    //lista completa
     public function mostrar_actor()
     {
         $actores = $this->model->obtener_actor();
@@ -37,12 +38,11 @@ class actorcontroller
     public function mostrar_actor_por_id($id)
     {
         if (ValidationHelper::verifyIdRouter($id)) {
-            $peliculas = $this->modelPelicula->obtener_pelicula_actor_por_id($id);
-            
-            if ($peliculas != null && count($peliculas) > 0) {
-                $this->view->mostrar_peliculas_actor_por_id($peliculas);
+            $actor = $this->model->obtener_actor_id($id);
+            if ($actor != null) {
+                $this->view->mostrar_peliculas_actor_por_id($actor);
             } else {
-                $this->alertview->render_empty("Este actor no tiene películas asociadas");
+                $this->alertview->render_empty("el actor seleccionado no existe");
             }
         } else {
             $this->alertview->render_error("404-Not-Found");
@@ -52,7 +52,7 @@ class actorcontroller
     //eliminar actor
     public function remover_actor($id)
     {
-        AuthHelper::verify(); //verifico permisos y parametros validos
+        AuthHelper::verify();
         if (ValidationHelper::verifyIdRouter($id)) {
             try {
                 $actorEliminada = $this->model->eliminar_actor($id);
@@ -62,10 +62,7 @@ class actorcontroller
                     $this->alertview->render_error("error al intentar eliminar");
                 }
             } catch (PDOException) {
-                $this->alertview->render_error("la actor que intenta eliminar, tiene asociado un conjunto de items.
-                                            Para poder eliminar correctamente,
-                                            debera eliminar los registros de los items asociados/
-                                            ");
+                $this->alertview->render_error("Error al eliminar el actor");
             }
         } else {
             $this->alertview->render_error("404-Not-Found");
@@ -74,11 +71,12 @@ class actorcontroller
 
     //mostrar formulario modificacion
     public function mostrar_formulario_actor_modificacion($id){
-        AuthHelper::verify(); //verifico permisos y parametros validos
+        AuthHelper::verify();
         if (ValidationHelper::verifyIdRouter($id)) {
-            $actor = $this->model->obtener_actor_id($id);//consulto los datos actuales
-            if($actor!=null){
-            $this->view->mostrar_formulario_actor_modificacion($actor);
+            $actor = $this->model->obtener_actor_id($id);
+            if($actor != null){
+                $peliculas = $this->modellista->obtener_lista(); // Obtener películas disponibles
+                $this->view->mostrar_formulario_actor_modificacion($actor, $peliculas);
             }
             else{
                 $this->alertview->render_error("error al intentar mostrar formulario");
@@ -91,70 +89,57 @@ class actorcontroller
     //enviar datos de modificacion 
     public function mostrar_actor_modificacion(){
         AuthHelper::verify();
-        try {//verifico permisos, parametros validos y posible acceso sin previo acceso al form modificacion.
+        try {
             if ($_POST && ValidationHelper::verifyForm($_POST)) {
-                $id_actor =htmlspecialchars($_POST['id_actor']);
-                $nombre_actor =htmlspecialchars($_POST['nombre_actor']);
-                $fecha_nacimiento =htmlspecialchars($_POST['fecha_nacimiento']);
-                $edad =htmlspecialchars($_POST['edad']);
-                $nacionalidad =htmlspecialchars($_POST['nacionalidad']);
-                $id_pelicula =htmlspecialchars($_POST['id_pelicula ']);
+                $id_actor = htmlspecialchars($_POST['id_actor']);
+                $nombre_actor = htmlspecialchars($_POST['nombre_actor']);
+                $fecha_nacimiento = htmlspecialchars($_POST['fecha_nacimiento']);
+                $edad = htmlspecialchars($_POST['edad']);
+                $nacionalidad = htmlspecialchars($_POST['nacionalidad']);
+                $id_pelicula = htmlspecialchars($_POST['id_pelicula']);
 
-                $actorModificada = $this->model->modificar_pelicula($id_actor, $nombre_actor, $fecha_nacimiento, $edad, $nacionalidad);
-
-
+                $actorModificada = $this->model->modificar_actor($id_actor, $nombre_actor, $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula);
                 if ($actorModificada > 0) {
                     header('Location: ' . BASE_URL . "actor");
                 } else {
                     $this->alertview->render_error("No se pudo actualizar actor");
                 }
             } else {
-                $this->alertview->render_error("Error-El formulario no pudo ser procesado, asegurate de que hayas completado todos los campos");
+                $this->alertview->render_error("Error-El formulario no pudo ser procesado, asegúrate de que hayas completado todos los campos");
             }
         } catch (PDOException $error) {
-            $this->alertview->render_error("Error en la consulta a la base de datos/$error");
+            $this->alertview->render_error("Error en la consulta a la base de datos: " . $error->getMessage());
         }
     }
 
-
-    //mostrar formulario altaactor
+    //mostrar formulario alta actor
     public function mostrar_formulario_actor(){
-    AuthHelper::verify();
-    $peliculas = $this->model->obtener_id_pelicula();
+        AuthHelper::verify();
+        $peliculas = $this->modellista->obtener_lista(); // Obtener películas disponibles
+        $this->view->mostrar_formulario_actor($peliculas);
+    }
     
-    // Debug temporal
-    echo "<pre>";
-    print_r($peliculas);
-    echo "</pre>";
-    die();
-    
-    $this->view->mostrar_formulario_actor($peliculas);
-}
-
-
     public function agregar_actor(){
         AuthHelper::verify();
-        try {//verifico permisos, parametros validos y posible acceso sin datos al form de alta.
+        try {
             if ($_POST && ValidationHelper::verifyForm($_POST)) {
-                $id_actor =htmlspecialchars($_POST['id_actor']);
-                $nombre_actor =htmlspecialchars($_POST['nombre_actor']);
-                $fecha_nacimiento =htmlspecialchars($_POST['fecha_nacimiento']);
-                $edad =htmlspecialchars($_POST['edad']);
-                $nacionalidad =htmlspecialchars($_POST['nacionalidad']);
-                $id_pelicula =htmlspecialchars($_POST['id_pelicula']);
+                $nombre_actor = htmlspecialchars($_POST['nombre_actor']);
+                $fecha_nacimiento = htmlspecialchars($_POST['fecha_nacimiento']);
+                $edad = htmlspecialchars($_POST['edad']);
+                $nacionalidad = htmlspecialchars($_POST['nacionalidad']);
+                $id_pelicula = htmlspecialchars($_POST['id_pelicula']);
 
-                $id = $this->model->insertar_actor($nombre_actor, $fecha_nacimiento, $edad, $nacionalidad);
+                $id = $this->model->insertar_actor($nombre_actor, $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula);
                 if ($id) {
                     header('Location: ' . BASE_URL . "actor");
                 } else {
-                    $this->alertview->render_error("Error al insertar la actor");
+                    $this->alertview->render_error("Error al insertar el actor");
                 }
             } else {
-                $this->alertview->render_error("Error-El formulario no pudo ser procesado,
-                                             asegurate de que hayas completado todos los campos");
+                $this->alertview->render_error("Error-El formulario no pudo ser procesado, asegúrate de que hayas completado todos los campos");
             }
         } catch (PDOException $error) {
-            $this->alertview->render_error("Error en la consulta a la base de datos/$error");
+            $this->alertview->render_error("Error en la consulta a la base de datos: " . $error->getMessage());
         }
     }
 }
