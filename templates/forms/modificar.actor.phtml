@@ -1,32 +1,50 @@
-<?php
-
-   require './templates/task/header.phtml';?>
+<?php require './templates/task/header.phtml'; ?>
     
-    <div class="container mt-5">
-
-        <h2>Modificacion de actor</h2>
-        <form action="modificar_actor" method="POST">
-            
-            <div class="mb-3">
-                <input type="hidden" class="form-control" id="id_actor" name="id_actor" value="<?=$actor[0]->id_actor?>">
-            </div>
-            <div class="mb-3">
-                <label for="nombre_actor" class="form-label">Nombre del actor</label>
-                <input type="text" class="form-control" id="nombre_actor" name="nombre_actor" value="<?=$actor[0]->nombre_actor;?>" required>
-            </div>
-            <div class="mb-3">
-                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento </label>
-                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="<?=$actor[0]->fecha_nacimiento;?>"required>
-            </div>
-            <div class="mb-3">
-                <label for="nacionalidad" class="form-label">nacionalidad</label>
-                <input type="text" class="form-control" id="nacionalidad" name="nacionalidad" value="<?=$actor[0]->nacionalidad;?>"required>
-            </div>
+<div class="container mt-5">
+    <h2>Modificación de actor</h2>
+    <form action="modificar_actor" method="POST">
+        <input type="hidden" name="id_actor" value="<?= $actor->id_actor ?>">
+        
+        <div class="mb-3">
+            <label for="id_pelicula" class="form-label">Película *</label>
+            <select class="form-select" id="id_pelicula" name="id_pelicula" required>
+                <option value="">Seleccione una película</option>
+                <?php foreach ($peliculas as $pelicula): ?>
+                    <option value="<?= $pelicula->id_pelicula; ?>" 
+                            <?= ($actor->id_pelicula == $pelicula->id_pelicula) ? 'selected' : ''; ?>>
+                        <?= $pelicula->nombre_pelicula; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="nombre_actor" class="form-label">Nombre del actor *</label>
+            <input type="text" class="form-control" id="nombre_actor" name="nombre_actor" 
+                   value="<?= $actor->nombre_actor; ?>" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento *</label>
+            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" 
+                   value="<?= $actor->fecha_nacimiento; ?>" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="edad" class="form-label">Edad *</label>
+            <input type="number" class="form-control" id="edad" name="edad" 
+                   value="<?= $actor->edad; ?>" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="nacionalidad" class="form-label">Nacionalidad *</label>
+            <input type="text" class="form-control" id="nacionalidad" name="nacionalidad" 
+                   value="<?= $actor->nacionalidad; ?>" required>
+        </div>
  
-            <button type="submit" class="btn btn-primary">Modificar</button>
-        </form>
-    </div>
+        <button type="submit" class="btn btn-primary">Modificar</button>
+        <a href="actor" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
 
-    <?php
-
-    require_once 'templates/task/footer.phtml'; 
+<?php require_once 'templates/task/footer.phtml'; ?>

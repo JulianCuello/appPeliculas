@@ -80,34 +80,35 @@ class Peliculacontroller{
         }
     }
 
-    //enviar datos de modificacion
-    public function mostrar_modificacion(){
-        AuthHelper::verify();
-        try {//verifico permisos, parametros validos y posible acceso sin previo acceso al form modificacion.
-            if ($_POST && ValidationHelper::verifyForm($_POST)) {
-                    $id_pelicula = $_POST['id_pelicula'];
-                    $nombre_pelicula = $_POST['nombre_pelicula'];
-                    $duracion = $_POST['duracion'];
-                    $genero = $_POST['genero'];
-                    $descripcion = $_POST['descripcion'];
-                    $fecha_estreno = $_POST['fecha_estreno'];
-                    $publico = $_POST['publico'];
-                    $img = $_POST['img'];
-                    $id_actor = $_POST['id_actor'];
-                $registroModificado = $this->model->modificar_pelicula($id_pelicula,$nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img, $id_actor);
+   //enviar datos de modificacion
+public function mostrar_modificacion(){
+    AuthHelper::verify();
+    try {
+        if ($_POST && ValidationHelper::verifyForm($_POST)) {
+            $id_pelicula = $_POST['id_pelicula'];
+            $nombre_pelicula = $_POST['nombre_pelicula'];
+            $duracion = $_POST['duracion'];
+            $genero = $_POST['genero'];
+            $descripcion = $_POST['descripcion'];
+            $fecha_estreno = $_POST['fecha_estreno'];
+            $publico = $_POST['publico'];
+            $img = $_POST['img'];
+            
+            $registroModificado = $this->model->modificar_pelicula($id_pelicula, $nombre_pelicula, $duracion, $genero, $descripcion, $fecha_estreno, $publico, $img);
 
-                if ($registroModificado > 0) {
-                    header('Location: ' . BASE_URL . "lista");
-                } else {
-                    $this->alertview->render_error("No se pudo actualizar registro");
-                }
+            if ($registroModificado >= 0) { // Cambié > 0 por >= 0 por si no hay cambios
+                header('Location: ' . BASE_URL . "lista");
+                exit();
             } else {
-                $this->alertview->render_error("error-el formulario no pudo ser procesado, asegurate de que hayas completado todos los campos");
+                $this->alertview->render_error("No se pudo actualizar registro");
             }
-        } catch (PDOException $error) {
-            $this->alertview->render_error("error en la consulta a la base de datos/$error");
+        } else {
+            $this->alertview->render_error("Error - El formulario no pudo ser procesado");
         }
+    } catch (PDOException $error) {
+        $this->alertview->render_error("Error en la consulta: " . $error->getMessage());
     }
+}
     
     //mostrar formulario altaProducto
     public function mostrar_formulario_alta(){
