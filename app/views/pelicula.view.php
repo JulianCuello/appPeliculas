@@ -1,9 +1,8 @@
 <?php
 
-//view de productos
 class listaview {
 
-    public function mostrar_lista($lista,$adm) {
+    public function mostrar_lista($lista, $adm) {
         require('./templates/show/lista.peliculas.phtml');        
     }
     
@@ -11,10 +10,11 @@ class listaview {
         require './templates/show/lista.pelicula_por_id.phtml';   
     }
 
-    public function mostrar_formulario_modificacion($actor, $item) {
+    public function mostrar_formulario_modificacion($item) {
         require './templates/forms/modificar.pelicula.phtml';          
     }
-    public function showForm($actor){
+    
+    public function showForm(){
         require './templates/forms/nueva.pelicula.phtml';
     }
 }
