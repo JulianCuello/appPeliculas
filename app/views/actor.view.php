@@ -18,7 +18,6 @@ class actorview{
         require './templates/forms/nuevo.actor.phtml';
     }
 }
-
  
 
 

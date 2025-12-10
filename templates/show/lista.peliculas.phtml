@@ -1,37 +1,78 @@
 <?php
 require './templates/task/header.phtml';
 ?>
-<div class="mt-1 w-100 mx-auto" style="height: 300px;">
-    <table class="table">
+<div class="mt-1 w-100 mx-auto" style="min-height: 300px;">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-center">id</th>
-                <th class="text-center">Pelicula</th>
-                <th class="text-center">Duracion</th>
-                <th class="text-center">Genero</th>
-                <th class="text-center">Descripcion</th>
-                <th class="text-center">Fecha de estreno </th>
-                <th class="text-center">publico </th>
-                <th class="text-center">Imagen </th>
+                <th class="text-center">ID</th>
+                <th class="text-center">Película</th>
+                <th class="text-center">Duración</th>
+                <th class="text-center">Género</th>
+                <th class="text-center">Descripción</th>
+                <th class="text-center">Fecha de estreno</th>
+                <th class="text-center">Público</th>
+                <th class="text-center">Actores</th>
+                <th class="text-center">Imagen</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($lista as $item) { ?>
+            <?php 
+            // Agrupar películas para evitar duplicados
+            $peliculas_unicas = [];
+            $actores_por_pelicula = [];
+            
+            // Primera pasada: agrupar datos
+            foreach ($lista as $item) {
+                // Guardar datos de la película (solo una vez)
+                if (!isset($peliculas_unicas[$item->id_pelicula])) {
+                    $peliculas_unicas[$item->id_pelicula] = $item;
+                    $actores_por_pelicula[$item->id_pelicula] = [];
+                }
+                
+                // Agregar actor si existe
+                if (isset($item->nombre_actor) && !empty($item->nombre_actor)) {
+                    $actores_por_pelicula[$item->id_pelicula][] = $item->nombre_actor;
+                }
+            }
+            
+            // Segunda pasada: mostrar películas
+            foreach ($peliculas_unicas as $pelicula) { 
+            ?>
                 <tr>
-                    <td class="text-center"><?= $item->id_pelicula; ?></td>
-                    <td class="text-center"><?= $item->nombre_pelicula; ?></td>
-                    <td class="text-center"><?= $item->duracion; ?></td>
-                    <td class="text-center"><?= $item->genero; ?></td>
-                    <td class="text-center"><?= $item->descripcion; ?></td>
-                    <td class="text-center"><?= $item->fecha_estreno; ?></td>
-                    <td class="text-center"><?= $item->publico; ?></td>
-                    <td class="text-center"><img src="<?= $item->img; ?>" class="img" style="max-width: 80px"></td>
+                    <td class="text-center"><?= $pelicula->id_pelicula; ?></td>
+                    <td class="text-center"><?= $pelicula->nombre_pelicula; ?></td>
+                    <td class="text-center"><?= $pelicula->duracion; ?> min</td>
+                    <td class="text-center"><?= $pelicula->genero; ?></td>
+                    <td class="text-center"><?= substr($pelicula->descripcion, 0, 50); ?>...</td>
+                    <td class="text-center"><?= date('d/m/Y', strtotime($pelicula->fecha_estreno)); ?></td>
+                    <td class="text-center"><?= $pelicula->publico; ?></td>
                     <td class="text-center">
-                        <a href="listaId/<?= $item->id_pelicula;?>" class="btn btn-primary">Ver Pelicula</a>
+                        <?php
+                        $actores = $actores_por_pelicula[$pelicula->id_pelicula];
+                        if (!empty($actores)) {
+                            echo implode('<br>', $actores);
+                        } else {
+                            echo '<span class="text-muted">Sin actores</span>';
+                        }
+                        ?>
+                    </td>
+                    <td class="text-center">
+                        <?php if (!empty($pelicula->img)): ?>
+                            <img src="<?= $pelicula->img; ?>" class="img-thumbnail" style="max-width: 80px" alt="<?= $pelicula->nombre_pelicula; ?>">
+                        <?php else: ?>
+                            <span class="text-muted">Sin imagen</span>
+                        <?php endif; ?>
+                    </td>
+                    <td class="text-center">
+                        <a href="listaId/<?= $pelicula->id_pelicula;?>" class="btn btn-primary btn-sm mb-1">Ver</a>
                         <?php if ($adm) { ?>
-                            <a href="eliminar_pelicula/<?= $item->id_pelicula; ?>" type="button" class='btn btn-danger ml-auto'>Eliminar</a>
-                            <a href="modificar_pelicula_formulario/<?= $item->id_pelicula; ?>" type="button" class='btn btn-success ml-auto'>Modificar</a>
+                            <a href="eliminar_pelicula/<?= $pelicula->id_pelicula; ?>" 
+                               onclick="return confirm('¿Está seguro de eliminar esta película?')" 
+                               class="btn btn-danger btn-sm mb-1">Eliminar</a>
+                            <a href="modificar_pelicula_formulario/<?= $pelicula->id_pelicula; ?>" 
+                               class="btn btn-success btn-sm mb-1">Modificar</a>
                         <?php } ?>
                     </td>
                 </tr>
@@ -39,5 +80,4 @@ require './templates/task/header.phtml';
         </tbody>
     </table>
 </div>
-<?php
- require_once 'templates/task/footer.phtml';
+<?php require_once 'templates/task/footer.phtml'; ?>

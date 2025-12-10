@@ -2,38 +2,45 @@
 <?php
 require './templates/task/header.phtml';   
 ?>
-    <div class="mt-1 w-100 mx-auto" style="height: 300px; ">
-        <table class="table">
-            <thead>
+<div class="mt-1 w-100 mx-auto" style="min-height: 300px;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Nombre del actor</th>
+                <th class="text-center">Fecha nacimiento</th>
+                <th class="text-center">Edad</th>
+                <th class="text-center">Nacionalidad</th>
+                <th class="text-center">Película</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($actores as $actor) { ?>      
                 <tr>
-                    <th class="text-center">id</th>
-                    <th class="text-center">nombre del actor</th>
-                    <th class="text-center">fecha_nacimiento</th>
-                    <th class="text-center">edad</th>
-                    <th class="text-center">nacionalidad</th>
-    
-                    <th class="text-center">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($actores as $actor) { ?>      
-                    <tr>
-                        <td class="text-center"><?= $actor->id_actor; ?></td>
-                        <td class="text-center"><?= $actor->nombre_actor; ?></td>
-                        <td class="text-center"><?= $actor->fecha_nacimiento; ?></td>
-                        <td class="text-center"><?= $actor->edad; ?></td>
-                        <td class="text-center"><?= $actor->nacionalidad; ?></td>
-                        <td class="text-center">
-                            <a href="actorId/<?= $actor->id_actor;?>" class="btn btn-primary">Ver actor</a>
-                            <?php if (AuthHelper::isAdmin()) { ?>
-                            <a href="remover_actor/<?= $actor->id_actor; ?>" type="button" class='btn btn-danger ml-auto'>Eliminar</a>
-                            <a href="modificar_actor_formulario/<?= $actor->id_actor; ?>" type="button" class='btn btn-success ml-auto'>Modificar</a>
-                            <?php } ?>
-                        </td>
-                        </tr>      
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-        <?php
-         require_once 'templates/task/footer.phtml';
+                    <td class="text-center"><?= $actor->id_actor; ?></td>
+                    <td class="text-center"><?= $actor->nombre_actor; ?></td>
+                    <td class="text-center"><?= $actor->fecha_nacimiento; ?></td>
+                    <td class="text-center"><?= $actor->edad; ?></td>
+                    <td class="text-center"><?= $actor->nacionalidad; ?></td>
+                    <td class="text-center">
+                        <?php if (isset($actor->nombre_pelicula)): ?>
+                            <a href="listaId/<?= $actor->id_pelicula; ?>"><?= $actor->nombre_pelicula; ?></a>
+                        <?php else: ?>
+                            <span class="text-muted">Sin película</span>
+                        <?php endif; ?>
+                    </td>
+                    <td class="text-center">
+                        <a href="actorId/<?= $actor->id_actor;?>" class="btn btn-primary btn-sm">Ver</a>
+                        <?php if (AuthHelper::isAdmin()) { ?>
+                        <a href="remover_actor/<?= $actor->id_actor; ?>" type="button" class='btn btn-danger btn-sm'>Eliminar</a>
+                        <a href="modificar_actor_formulario/<?= $actor->id_actor; ?>" type="button" class='btn btn-success btn-sm'>Modificar</a>
+                        <?php } ?>
+                    </td>
+                </tr>      
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
+
+<?php require_once 'templates/task/footer.phtml'; ?>

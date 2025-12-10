@@ -1,29 +1,38 @@
 <?php require './templates/task/header.phtml'; ?>
 
 <div class="container mt-5">
-    <h2 class="mb-4">Películas de <?= $peliculas[0]->nombre_actor ?? 'este actor'; ?></h2>
-    
-    <?php foreach($peliculas as $pelicula) { ?>
+    <?php if ($actor): ?>
         <div class="card mb-3">
             <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="<?= $pelicula->img; ?>" class="img-fluid rounded-start" alt="Imagen de la película">
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="card-body">
-                        <h5 class="card-title"><?= $pelicula->nombre_pelicula; ?></h5>
-                        <p class="card-text"><strong>Duración:</strong> <?= $pelicula->duracion; ?> minutos</p>
-                        <p class="card-text"><strong>Género:</strong> <?= $pelicula->genero; ?></p>
-                        <p class="card-text"><strong>Descripción:</strong> <?= $pelicula->descripcion; ?></p>
-                        <p class="card-text"><strong>Fecha de estreno:</strong> <?= $pelicula->fecha_estreno; ?></p>
-                        <p class="card-text"><strong>Público:</strong> <?= $pelicula->publico; ?></p>
+                        <h5 class="card-title"><?= $actor->nombre_actor; ?></h5>
+                        <p class="card-text"><strong>Fecha de nacimiento:</strong> <?= $actor->fecha_nacimiento; ?></p>
+                        <p class="card-text"><strong>Edad:</strong> <?= $actor->edad; ?> años</p>
+                        <p class="card-text"><strong>Nacionalidad:</strong> <?= $actor->nacionalidad; ?></p>
+                        
+                        <?php if (isset($actor->nombre_pelicula) && !empty($actor->nombre_pelicula)): ?>
+                        <h6 class="mt-3">Película:</h6>
+                        <div class="alert alert-info">
+                            <a href="listaId/<?= $actor->id_pelicula; ?>" class="alert-link">
+                                <?= $actor->nombre_pelicula; ?>
+                            </a>
+                        </div>
+                        <?php else: ?>
+                        <p class="text-muted mt-3">No tiene película asignada</p>
+                        <?php endif; ?>
+                        
+                        <a href="actor" class="btn btn-primary mt-3">Volver</a>
                     </div>
                 </div>
             </div>
         </div>
-    <?php } ?>
-    
-    <a href="actor" class="btn btn-primary">Volver a la lista de actores</a>
+    <?php else: ?>
+        <div class="alert alert-warning">
+            No se encontró el actor solicitado.
+        </div>
+        <a href="actor" class="btn btn-primary">Volver</a>
+    <?php endif; ?>
 </div>
 
 <?php require_once 'templates/task/footer.phtml'; ?>

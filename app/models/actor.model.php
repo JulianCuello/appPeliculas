@@ -13,12 +13,12 @@ class actormodel extends model{
     
     //consulta actor segun id
     public function obtener_actor_id($id){
-        $query = $this->db->prepare('SELECT actor.*, pelicula.nombre_pelicula FROM actor LEFT JOIN pelicula ON actor.id_pelicula = pelicula.id_pelicula WHERE id_actor=?');
+        $query = $this->db->prepare('SELECT actor.*, pelicula.nombre_pelicula FROM actor LEFT JOIN pelicula ON actor.id_pelicula = pelicula.id_pelicula WHERE actor.id_actor = ?');
         $query->execute([$id]);
         return $query->fetch(PDO::FETCH_OBJ);       
     }
     
-    //inserta nuevo actor (sin id_actor porque es AUTO_INCREMENT)
+    //inserta nuevo actor CON id_pelicula
     public function insertar_actor($nombre_actor, $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula){
         $query = $this->db->prepare('INSERT INTO actor (nombre_actor, fecha_nacimiento, edad, nacionalidad, id_pelicula) VALUES (?, ?, ?, ?, ?)');
         $query->execute([$nombre_actor, $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula]);
@@ -32,9 +32,9 @@ class actormodel extends model{
         return $query->rowCount();
     }
 
-    //modifica actor
+    //modifica actor CON id_pelicula
     public function modificar_actor($id_actor, $nombre_actor, $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula){
-        $query = $this->db->prepare('UPDATE actor SET nombre_actor=?, fecha_nacimiento=?, edad=?, nacionalidad=?, id_pelicula=? WHERE id_actor=?');
+        $query = $this->db->prepare('UPDATE actor SET nombre_actor = ?, fecha_nacimiento = ?, edad = ?, nacionalidad = ?, id_pelicula = ? WHERE id_actor = ?');
         $query->execute([$nombre_actor, $fecha_nacimiento, $edad, $nacionalidad, $id_pelicula, $id_actor]);
         return $query->rowCount();
     }
